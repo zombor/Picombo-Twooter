@@ -7,6 +7,8 @@ module Picombo
 			property :username,	String, :unique => :u1
 			property :password,	String
 			property :email,	String
+
+			has n, :twoots, :model => 'Picombo::Models::Twoot'
 		end
 	end
 end

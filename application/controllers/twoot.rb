@@ -15,6 +15,11 @@ module Picombo
 			end
 
 			def post
+				if ! Picombo::Auth.logged_in?
+					@@template.set('body', 'You must be logged in to post twoots')
+					return
+				end
+
 				if Picombo::Input.instance.post.length > 0
 					user = Picombo::Session.instance.get('user')
 
@@ -29,6 +34,16 @@ module Picombo
 				else
 					body = Picombo::View::Core.new('twoot/post')
 				end
+
+				@@template.set('body', body.render(true))
+			end
+
+			# lists a user's twoots
+			def user(user_id)
+				twoots = Picombo::Models::Twoot.get(:user_id, user_id)
+
+				body = Picombo::View::Core.new('twoot/index')
+				body.set('twoots', twoots)
 
 				@@template.set('body', body.render(true))
 			end

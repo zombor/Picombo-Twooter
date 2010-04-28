@@ -4,9 +4,10 @@ module Picombo
 			storage_names[:default] = 'twoots'
 
 			property :id,      Serial
-			property :user_id, String
 			property :body,    String
 			property :date,    String
+
+			belongs_to :user, :model => 'Picombo::Models::User'
 		end
 	end
 end
