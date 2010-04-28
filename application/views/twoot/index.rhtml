@@ -1,0 +1,9 @@
+<h2>All Twoots</h2>
+<ul>
+	<% @twoots.each do |twoot| %><li>
+		<p><%=twoot.user_id %> said:</p>
+		<p><%=twoot.body%></p>
+	</li>
+	<% end %>
+</ul>
+<%= $LOAD_PATH.inspect%>
