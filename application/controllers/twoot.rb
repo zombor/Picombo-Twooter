@@ -6,17 +6,12 @@ module Picombo
 			end
 
 			def index
-				twoots = Picombo::Models::Twoot.all
-
-				body = Picombo::View::Core.new('twoot/index')
-				body.set('twoots', twoots)
-
-				@@template.set('body', body.render(true))
+				@template[:body] = Picombo::Stache::Twoot_Index.new.render
 			end
 
 			def post
 				if ! Picombo::Auth.logged_in?
-					@@template.set('body', 'You must be logged in to post twoots')
+					@template[:body] = 'You must be logged in to post twoots'
 					return
 				end
 
@@ -29,23 +24,17 @@ module Picombo
 					twoot.date = Time.new
 					twoot.save
 
-					body = Picombo::View::Core.new('twoot/post_success')
-					body.set('user', user.inspect)
+					body = Picombo::Stache::Twoot_PostSuccess.new
 				else
-					body = Picombo::View::Core.new('twoot/post')
+					body = Picombo::Stache::Twoot_Post.new
 				end
 
-				@@template.set('body', body.render(true))
+				@template[:body] = body.render
 			end
 
 			# lists a user's twoots
 			def user(user_id)
-				twoots = Picombo::Models::Twoot.get(:user_id, user_id)
-
-				body = Picombo::View::Core.new('twoot/index')
-				body.set('twoots', twoots)
-
-				@@template.set('body', body.render(true))
+				@template[:body] = Picombo::Stache::Twoot_User.new(user_id).render
 			end
 		end
 	end

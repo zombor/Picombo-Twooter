@@ -1,10 +1,9 @@
-PICOMBO = File.expand_path(Dir.getwd) + '/'
-APPPATH = PICOMBO + 'application/'
+::PICOMBO = ::File.expand_path(Dir.getwd) + '/'
+::APPPATH = PICOMBO + 'application/'
 
-$LOAD_PATH.unshift(File.expand_path(Dir.getwd) + '/../picombo.git/lib/')
-$LOAD_PATH.unshift(APPPATH)
+$LOAD_PATH.unshift(::APPPATH)
 
-use Rack::Static, :urls => ['/css', '/images']
+use Rack::Static, :urls => ['/css', '/images', '/js']
 use Rack::Reloader
 use Rack::ShowExceptions
 

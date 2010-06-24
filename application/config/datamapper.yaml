@@ -1,6 +1,0 @@
-default:
- driver: mysql
- host: localhost
- database: twooter
- username: twooter
- password: twooter

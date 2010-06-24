@@ -1,6 +1,7 @@
 module Picombo
 	module Models
-		class User < Picombo::Model
+		class User
+			include DataMapper::Resource
 			storage_names[:default] = 'users'
 
 			property :id,		Serial
@@ -9,6 +10,14 @@ module Picombo
 			property :email,	String
 
 			has n, :twoots, :model => 'Picombo::Models::Twoot'
+
+			def self.name_field
+				:username
+			end
+
+			def password=(new_password)
+				attribute_set(:password, Picombo::Auth.hash_password(new_password))
+			end
 		end
 	end
 end

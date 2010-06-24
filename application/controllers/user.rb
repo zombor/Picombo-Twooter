@@ -6,10 +6,7 @@ module Picombo
 			end
 
 			def index
-				body = Picombo::View::Core.new('user/login')
-				body.set('post', Picombo::Session.instance.get.inspect)
-
-				@@template.set('body', body.render(true))
+				@template[:body] = Picombo::Stache::User_Login.new.render
 			end
 
 			def create
@@ -18,17 +15,16 @@ module Picombo
 					user = Picombo::Models::User.new
 					user.username = Picombo::Input.instance.post('username')
 					user.email = Picombo::Input.instance.post('email')
-					user.password = Digest::SHA1.hexdigest(Picombo::Input.instance.post('password'))
+					user.password = Picombo::Input.instance.post('password')
 					user.save
 
-					body = Picombo::View::Core.new('user/create_success')
-					body.set('user', user.inspect)
+					body = Picombo::Stache::User_CreateSuccess.new
 
 					Picombo::Auth.instance.login(user.username, Picombo::Input.instance.post('password'))
 				else
-					body = Picombo::View::Core.new('user/create')
+					body = Picombo::Stache::User_Create.new
 				end
-				@@template.set('body', body.render(true))
+				@template[:body] = body.render
 			end
 
 			def login
@@ -39,9 +35,9 @@ module Picombo
 						body = 'Invalid password or unknown username'
 					end
 				else
-					body = Picombo::View::Core.new('user/login').render(true)
+					body = Picombo::Stache::User_Login.new.render
 				end
-				@@template.set('body', body)
+				@template[:body] = body
 			end
 		end
 	end
