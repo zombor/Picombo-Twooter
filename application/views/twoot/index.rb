@@ -8,6 +8,7 @@ module Picombo
 
 				Picombo::Models::Twoot.all.each do |twoot|
 					twoots << {
+						:id       => twoot.user_id,
 						:username => twoot.user.username,
 						:date     => twoot.date,
 						:body     => twoot.body

@@ -12,8 +12,9 @@ module Picombo
 			def twoots
 				twoots = []
 
-				Picombo::Models::Twoot.get(:user_id, @user_id).each do |twoot|
+				Picombo::Models::Twoot.all(:user_id => @user_id).each do |twoot|
 					twoots << {
+						:id       => @user_id,
 						:username => twoot.user.username,
 						:date     => twoot.date,
 						:body     => twoot.body
